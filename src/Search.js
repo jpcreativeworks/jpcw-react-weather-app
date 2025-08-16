@@ -5,12 +5,11 @@ export default function Search({ onSearch }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (city.trim() === "") {
-    alert("Please enter a city");
-    } else {
-    alert(`You searched for ${city}`);
-    }
-    /*onSearch(city);*/
+    let trimmed = city.trim();
+    if (!trimmed) {
+      return alert("Please enter a city");
+    } onSearch(trimmed);
+      setCity("")
   }
   return(
     <form onSubmit={handleSubmit}>
