@@ -5,7 +5,9 @@ function weekdayLabel(tsSeconds) {
   return date.toLocaleDateString(undefined, {weekday: "short"});
 }
 
-export default function Forecast ({ days }) {
+export default function CurrentWeather({ days, units }) {
+  let unitSymbol = units === "metric" ? "°C" : "°F";
+
   return(
     <div style={{ marginTop: 16 }}>
       <h3>5-Day Forecast</h3>
@@ -30,9 +32,9 @@ export default function Forecast ({ days }) {
               height={48}
             />
             <div style={{ marginTop: 6 }}>
-              <strong>{Math.round(day.temperature.maximum)}°</strong>{" / "}
+              <strong>{Math.round(day.temperature.maximum)}{unitSymbol}</strong>{" / "}
               <span style={{ color: "#666" }}>
-                {Math.round(day.temperature.minimum)}°
+                {Math.round(day.temperature.minimum)}{unitSymbol}
               </span>
             </div>
             <div style={{ textTransform: "capitalize", color: "#555", marginTop: 4 }}>
