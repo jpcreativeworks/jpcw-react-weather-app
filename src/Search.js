@@ -12,7 +12,7 @@ export default function Search({ onSearch }) {
       setCity("")
   }
   return(
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="search">
       <input
         type="text"
         placeholder="Enter City..."
