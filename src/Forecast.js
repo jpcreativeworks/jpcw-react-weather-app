@@ -5,39 +5,30 @@ function weekdayLabel(tsSeconds) {
   return date.toLocaleDateString(undefined, {weekday: "short"});
 }
 
-export default function CurrentWeather({ days, units }) {
+export default function Forecast({ days, units }) {
   let unitSymbol = units === "metric" ? "°C" : "°F";
 
   return(
-    <div style={{ marginTop: 16 }}>
+    <div className="card forecast">
       <h3>5-Day Forecast</h3>
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(5, 1fr)",
-        gap: 12
-      }}>
+      <div className="forecast-grid">
         {days.map((day) => (
-          <div key={day.time} style={{
-            textAlign: "center",
-            border: "1px solid #eee",
-            borderRadius: 10,
-            padding: 10,
-            background: "#fafafa"
-          }}>
-            <div style={{ fontWeight: 600 }}>{weekdayLabel(day.time)}</div>
+          <div key={day.time} className="forecast-card">
+            <div className="forecast-day">{weekdayLabel(day.time)}</div>
             <img
+              className="icon-sm"
               src={day.condition.icon_url}
               alt={day.condition.description}
               width={48}
               height={48}
             />
-            <div style={{ marginTop: 6 }}>
-              <strong>{Math.round(day.temperature.maximum)}{unitSymbol}</strong>{" / "}
-              <span style={{ color: "#666" }}>
+            <div className="temps">
+              <span className="hi">{Math.round(day.temperature.maximum)}{unitSymbol}</span>{" / "}
+              <span className="lo">
                 {Math.round(day.temperature.minimum)}{unitSymbol}
               </span>
             </div>
-            <div style={{ textTransform: "capitalize", color: "#555", marginTop: 4 }}>
+            <div className="desc">
               {day.condition.description}
             </div>
           </div>

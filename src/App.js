@@ -4,6 +4,7 @@ import './App.css';
 import Search from "./Search"
 import CurrentWeather from "./CurrentWeather";
 import Forecast from "./Forecast";
+import Footer from "./Footer"
 
 const key = "7fd5430a29oa8949b4d239de06t9a3d4"
 
@@ -36,7 +37,7 @@ export default function App() {
       console.log("[forecast daily]", forecastData.daily)
 
       setWeather(currentWeather);
-      setForecast(forecastData.daily || [].slice(0, 5));
+      setForecast((forecastData.daily || []).slice(0, 5));
       setLoading(false)
     } catch (err) {
       setLoading(false)
@@ -52,25 +53,34 @@ export default function App() {
     }
   }
 
+  function capitalizeWords(str) {
+  return str
+    .split(" ")
+    .map(w => w ? w[0].toUpperCase() + w.slice(1).toLowerCase() : "")
+    .join(" ");
+}
+
   const unitLabel = units === "metric" ? "imperial" : "metric";
 
   return (
-    <div className="App">
+    <div className="app-header">
       <h1>Weather App </h1>
       <Search onSearch={handleSearch} />
 
       <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "8px 0 16px" }}>
-        <button type="button" onClick={toggleUnits} disabled={!lastCity || loading}>
+        <button className="btn" type="button" onClick={toggleUnits} disabled={!lastCity || loading}>
           Switch to {units === "metric" ? "°F" : "°C"}
         </button>
-        {lastCity && <span style={{ color: "#666" }}>Showing {unitLabel} for {lastCity}</span>}
+        {lastCity && <span>Showing {unitLabel} for {capitalizeWords(lastCity)}</span>}
       </div>
 
-      {loading === "loading" && <p>Loading…</p>}
-      {errorMessage === "error" && <p style={{ color: "#b00020" }}>{errorMessage}</p>}
+      {loading && <p className="hint">Loading…</p>}
+      {errorMessage && <p className="error">{errorMessage}</p>}
 
       {weather && <CurrentWeather data={weather} units={units}/>}
-      {forecast.length > 0 && <Forecast days={forecast} units={units}/>}    </div>
+      {forecast.length > 0 && <Forecast days={forecast} units={units}/>}   
+      <Footer /> 
+    </div>
   );
 }
 

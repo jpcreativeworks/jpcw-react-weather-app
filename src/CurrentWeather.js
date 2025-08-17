@@ -11,14 +11,21 @@ export default function CurrentWeather({ data, units }) {
   let description = data.condition.description;
 
   return (
-    <div style={{ marginTop: 16 }}>
-      <h2>{data.city}, {data.country}</h2>
-      <p style={{ fontSize: "2rem", margin: "6px 0" }}>{temp}{unitSymbol}</p>
-      <p style={{ textTransform: "capitalize" }}>{description}</p>
-      <img src={data.condition.icon_url} alt={description} width={80} height={80} />
-      <p style={{ color: "#666" }}>
-        Feels like {feels}{unitSymbol} • Humidity {humidity}% • Wind {wind} {windUnit}
-      </p>
+    <div className="card current">
+      <div>
+      <h2 className="city">{data.city}, {data.country}</h2>
+      <div className="temp">
+        <span className="value" style={{ fontSize: "2rem", margin: "6px 0" }}>{temp}{unitSymbol}</span>
+        <span className="desc" style={{ textTransform: "capitalize" }}>{description}</span>
+      </div>
+
+      <div className="meta">
+        <span>Feels like {feels}{unitSymbol}</span>
+        <span>Humidity {humidity}%</span>
+        <span>Wind {wind} {windUnit}</span>
+      </div>
+      </div>
+      <img className="icon-lg" src={data.condition.icon_url} alt={description} />
     </div>
   );
 }
